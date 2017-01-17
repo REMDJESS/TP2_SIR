@@ -1,111 +1,101 @@
 package domain;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author ANANI
+ */
 @Entity
-public class Person {
-	@Id
-	@GeneratedValue
+@Table(name = "Person")
+public class Person{
+	
 	long id;
-	@Column(name = "nom", length = 75)
 	String nom;
-	@Column(name = "prenom", length = 150)
 	String prenom;
-
-	String email;
-	//@OneToMany
+	String mail;
+	
+	
+	List<Person> friend = new ArrayList<Person>();
 	Home home;
-	///@ManyToMany
-	//List<Person> friends;
+	
+	public Person(){}
 
-	public Person() {
-
-	}
-
-	public Person(String nom, String prenom, String email, Home home) {
+	public Person(String nom, String prenom, String mail) {
+		super();
 		this.nom = nom;
 		this.prenom = prenom;
-		this.home = home;
-		//this.friends = new ArrayList<Person>();
+                this.mail= mail;
 	}
 
-	/**
-	 * @return the nom
-	 */
+
 	public String getNom() {
 		return nom;
 	}
 
-	/**
-	 * @param nom
-	 *            the nom to set
-	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
-	/**
-	 * @return the prenom
-	 */
 	public String getPrenom() {
 		return prenom;
 	}
 
-	/**
-	 * @param prenom
-	 *            the prenom to set
-	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
 
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
+	public String getMail() {
+		return mail;
 	}
 
-	/**
-	 * @param email
-	 *            the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
-	@ManyToOne
+	@ManyToMany
+	public List<Person> getFriend() {
+		return friend;
+	}
+
+	public void setFriend(List<Person> friend) {
+		this.friend = friend;
+	}
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	public Home getHome() {
 		return home;
 	}
+
 
 	public void setHome(Home home) {
 		this.home = home;
 	}
 
-	/**
-	 * @return the friends
-	 */
-	/*public List<Person> getFriends() {
-		return friends;
+	@Id
+	@GeneratedValue
+	public long getId() {
+		return id;
 	}
 
-	*//**
-	 * @param friends
-	 *            the friends to set
-	 *//*
-	public void setFriends(List<Person> friends) {
-		this.friends = friends;
-	}*/
+	public void setId(long id) {
+		this.id = id;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Person [nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", department="
-                + home.getNameHome() + "]";
+		return "Person [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", friend=" + friend
+				+ ", home=" + home + " ]";
 	}
 
 }

@@ -5,59 +5,56 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/**
+ *
+ * @author ANANI
+ */
 @Entity
 public class Heater {
-	@Id
-	@GeneratedValue
-	long id;
-	
-	double puissance;
-	double consommationHeater;
-	
-	//@ManyToOne
-	Home home;
-	
-	public Heater(){
-		
-	}
-	public Heater( double puissance, double consommationHeater){
-		this.puissance = puissance;	
-		this.consommationHeater = consommationHeater;
-	}
 
-	/**
-	 * @return the puissance
-	 */
-	public double getPuissance() {
-		return puissance;
-	}
+    long id;
+    String nameHeater;
 
-	/**
-	 * @param puissance the puissance to set
-	 */
-	public void setPuissance(double puissance) {
-		this.puissance = puissance;
-	}
+    Home home;
 
-	public double getConsommationHeater() {
-		return consommationHeater;
-	}
-	public void setConsommationHeater(double consommationHeater) {
-		this.consommationHeater = consommationHeater;
-	}
-	
-	@ManyToOne
-	public Home getHome() {
-		return home;
-	}
+    public Heater() {
+    }
 
-	
-	public void setHome(Home home) {
-		this.home = home;
-	}
-	@Override
-	public String toString() {
-		return "Heater [puissance =" + puissance + ", home="+ home.getNameHome() + "]";
-	}
+    public Heater(long id, String nameHeater, Home home) {
+        this.id = id;
+        this.nameHeater = nameHeater;
+        this.home = home;
+    }
 
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNameHeater() {
+        return nameHeater;
+    }
+
+    public void setNameHeater(String nameHeater) {
+        this.nameHeater = nameHeater;
+    }
+
+    @ManyToOne
+    public Home getHome() {
+        return home;
+    }
+
+    public void setHome(Home home) {
+        this.home = home;
+    }
+
+    @Override
+    public String toString() {
+        return "Heater [id=" + id + ", marque=" + nameHeater + ", home=" + home + " ]";
+    }
 }

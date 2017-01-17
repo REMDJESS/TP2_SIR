@@ -7,112 +7,89 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 public class Home {
 
-	@Id
-	@GeneratedValue
-	long id;
+    long id;
+    int taille;
+    String nameHome;
+    int nbpieces;
 
-	int taille;
+    List<Person> personne = new ArrayList<Person>();
+    List<Heater> heater = new ArrayList<Heater>();
+    List<ElectronicDevice> equipement = new ArrayList<ElectronicDevice>();
 
-	String nameHome;
+    public Home() {
+    }
 
-	int nbrePiece;
+    public Home(int taille, int nbpieces, String nameHome) {
+        this.taille = taille;
+        this.nbpieces = nbpieces;
+        this.nameHome = nameHome;
+    }
 
-	List<Person> person = new ArrayList<Person>();
-	
-	
-	List<Heater> heater = new ArrayList<Heater>();
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
 
-	// @OneToMany(mappedBy="home", cascade={CascadeType.REMOVE,
-	// CascadeType.REFRESH})
-	// List<Heater> heater;
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	//List<ElectronicDevice> EquipementElectroniques = new ArrayList<ElectronicDevice>();
+    public int getTaille() {
+        return taille;
+    }
 
-	// @ManyToOne(mappedBy ="person", cascade={ CascadeType.REMOVE,
-	// CascadeType.REFRESH})
-	// Person person;
-	public Home() {
-		super();
+    public void setTaille(int taille) {
+        this.taille = taille;
+    }
 
-	}
+    public int getNbpieces() {
+        return nbpieces;
+    }
 
-	public Home( String nameHome, int taille, int nbrePiece) {
-		this.nameHome= nameHome;
-		this.taille = taille;
-		this.nbrePiece = nbrePiece;
-		
-	}
+    public void setNbpieces(int nbpieces) {
+        this.nbpieces = nbpieces;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
+    public String getNameHome() {
+        return nameHome;
+    }
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setNameHome(String nameHome) {
+        this.nameHome = nameHome;
+    }
 
-	public long getTaille() {
-		return taille;
-	}
+    @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
+    public List<Person> getPersonne() {
+        return personne;
+    }
 
-	public void setTaille(int taille) {
-		this.taille = taille;
-	}
+    public void setPersonne(List<Person> personne) {
+        this.personne = personne;
+    }
 
-	public String getNameHome() {
-		return nameHome;
-	}
+    @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
+    public List<Heater> getHeater() {
+        return heater;
+    }
 
-	public void setNameHome(String nameHome) {
-		this.nameHome = nameHome;
-	}
+    public void setHeater(List<Heater> heater) {
+        this.heater = heater;
+    }
 
-	public int getNbrePiece() {
-		return nbrePiece;
-	}
+    @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
+    public List<ElectronicDevice> getEquipement() {
+        return equipement;
+    }
 
-	public void setNbrePiece(int nbrePiece) {
-		this.nbrePiece = nbrePiece;
-	}
-
-	@OneToMany(mappedBy = "home", cascade = { CascadeType.PERSIST })
-	public List<Person> getPerson() {
-		return person;
-	}
-
-	public void setPerson(List<Person> person) {
-		this.person = person;
-	}
-	@OneToMany(mappedBy = "home", cascade = { CascadeType.PERSIST })
-	public List<Heater> getHeater() {
-		return heater;
-	}
-
-	public void setHeater(List<Heater> heater) {
-		this.heater = heater;
-	}
-
-
-//	@OneToMany(mappedBy = "home", cascade = { CascadeType.PERSIST })
-//	public List<ElectronicDevice> getEquipementElectroniques() {
-//		return EquipementElectroniques;
-//	}
-//
-//	public void setEquipementElectroniques(List<ElectronicDevice> equipementElectroniques) {
-//		EquipementElectroniques = equipementElectroniques;
-//	}
+    public void setEquipement(List<ElectronicDevice> equipement) {
+        this.equipement = equipement;
+    }
 
 }

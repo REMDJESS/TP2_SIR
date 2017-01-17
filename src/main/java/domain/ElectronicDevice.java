@@ -1,55 +1,61 @@
 package domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author ANANI
+ */
 @Entity
 public class ElectronicDevice {
 
+	long id;
+	int consommation;
+	
+	Home home;
+	
+	public ElectronicDevice(){}
+	
+	public ElectronicDevice(long id, int consommation, Home home) {
+		this.id = id;
+		this.consommation = consommation;
+		this.home = home;
+	}
+
 	@Id
 	@GeneratedValue
-	long id;
-	
-	double consommationMoyenne;
-	
-	//@ManyToOne
-	//Home home;
-
-	public ElectronicDevice(){
-		
-	}
-	public ElectronicDevice(double consommationMoyenne){
-		
-		this.consommationMoyenne= consommationMoyenne;
-		
-	}
-	/**
-	 * @return the consommationMoyenne
-	 */
-	public double getConsommationMoyenne() {
-		return consommationMoyenne;
+	public long getId() {
+		return id;
 	}
 
-	/**
-	 * @param consommationMoyenne the consommationMoyenne to set
-	 */
-	public void setConsommationMoyenne(double consommationMoyenne) {
-		this.consommationMoyenne = consommationMoyenne;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-//	@ManyToOne
-//	public Home getHome() {
-//		return home;
-//	}
-//
-//	public void setHome(Home home) {
-//		this.home = home;
-//	}
-//
-//	@Override
-//	public String toString() {
-//		return "ElectronicDevice [consommationMoyenne =" + consommationMoyenne + ", home="+ home.getNameHome() + "]";
-//	}
+	public int getConsommation() {
+		return consommation;
+	}
+
+	public void setConsommation(int consommation) {
+		this.consommation = consommation;
+	}
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	public Home getHome() {
+		return home;
+	}
+
+	public void setHome(Home home) {
+		this.home = home;
+	}
+
+	@Override
+	public String toString() {
+		return "ElectronicDevice [id=" + id + ", consommation=" + consommation + ", home=" + home + "]";
+	}
 }
