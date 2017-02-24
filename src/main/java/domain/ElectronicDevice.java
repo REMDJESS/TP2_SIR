@@ -6,56 +6,46 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 
 /**
  *
  * @author ANANI
  */
 @Entity
-public class ElectronicDevice {
+public class ElectronicDevice extends SmartDevice {
 
-	long id;
-	int consommation;
-	
-	Home home;
-	
-	public ElectronicDevice(){}
-	
-	public ElectronicDevice(long id, int consommation, Home home) {
-		this.id = id;
-		this.consommation = consommation;
-		this.home = home;
-	}
+    private double consommation;
+    private Person person;
 
-	@Id
-	@GeneratedValue
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public ElectronicDevice() {
 
-	public int getConsommation() {
-		return consommation;
-	}
+    }
 
-	public void setConsommation(int consommation) {
-		this.consommation = consommation;
-	}
+    public ElectronicDevice(String name, double consommation) {
+        super(name);
+        this.consommation = consommation;
+    }
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	public Home getHome() {
-		return home;
-	}
+    public double getConsommation() {
+        return consommation;
+    }
 
-	public void setHome(Home home) {
-		this.home = home;
-	}
+    public void setConsommation(double consommation) {
+        this.consommation = consommation;
+    }
 
-	@Override
-	public String toString() {
-		return "ElectronicDevice [id=" + id + ", consommation=" + consommation + ", home=" + home + "]";
-	}
+    @ManyToOne
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }
+
+
