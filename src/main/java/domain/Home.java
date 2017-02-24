@@ -1,36 +1,40 @@
 package domain;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+/**
+ *
+ * @author ANANI
+ */
 @Entity
 public class Home {
 
-    long id;
-    int taille;
-    String nameHome;
-    int nbpieces;
+    private long id;
+    private String nomHome;
+    private Person person;
+    
+   
+    private List<Heater> heaters;
 
-    List<Person> personne = new ArrayList<Person>();
-    List<Heater> heater = new ArrayList<Heater>();
-    List<ElectronicDevice> equipement = new ArrayList<ElectronicDevice>();
+    // constructeur
+    public Home(String nomHome, List<Heater> heaters) {
+        this.nomHome = nomHome;
+        this.heaters = heaters;
+        initHeaters();
+    }
+
+    private void initHeaters() {
+        if (heaters != null)
+            for (Heater heater : heaters) {
+                heater.setHome(this);
+            }
+    }
 
     public Home() {
     }
 
-    public Home(int taille, int nbpieces, String nameHome) {
-        this.taille = taille;
-        this.nbpieces = nbpieces;
-        this.nameHome = nameHome;
-    }
-
+    // les getters et setters
     @Id
     @GeneratedValue
     public long getId() {
@@ -41,55 +45,30 @@ public class Home {
         this.id = id;
     }
 
-    public int getTaille() {
-        return taille;
+
+    public String getNomHome() {
+        return nomHome;
     }
 
-    public void setTaille(int taille) {
-        this.taille = taille;
-    }
-
-    public int getNbpieces() {
-        return nbpieces;
-    }
-
-    public void setNbpieces(int nbpieces) {
-        this.nbpieces = nbpieces;
-    }
-
-    public String getNameHome() {
-        return nameHome;
-    }
-
-    public void setNameHome(String nameHome) {
-        this.nameHome = nameHome;
+    public void setNomHome(String nomHome) {
+        this.nomHome = nomHome;
     }
 
     @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
-    public List<Person> getPersonne() {
-        return personne;
+    public List<Heater> getHeaters() {
+        return heaters;
     }
 
-    public void setPersonne(List<Person> personne) {
-        this.personne = personne;
+    public void setHeaters(List<Heater> heaters) {
+        this.heaters = heaters;
     }
 
-    @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
-    public List<Heater> getHeater() {
-        return heater;
+    @ManyToOne
+    public Person getPerson() {
+        return person;
     }
 
-    public void setHeater(List<Heater> heater) {
-        this.heater = heater;
+    public void setPerson(Person person) {
+        this.person = person;
     }
-
-    @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
-    public List<ElectronicDevice> getEquipement() {
-        return equipement;
-    }
-
-    public void setEquipement(List<ElectronicDevice> equipement) {
-        this.equipement = equipement;
-    }
-
 }
