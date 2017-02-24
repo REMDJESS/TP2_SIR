@@ -3,99 +3,91 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  *
  * @author ANANI
  */
 @Entity
-@Table(name = "Person")
-public class Person{
-	
-	long id;
-	String nom;
-	String prenom;
-	String mail;
-	
-	
-	List<Person> friend = new ArrayList<Person>();
-	Home home;
-	
-	public Person(){}
+public class Person {
 
-	public Person(String nom, String prenom, String mail) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-                this.mail= mail;
-	}
+    private long id;
+    private String nom;
+    private String prenom;
+    private List<Home> homes;
+    private List<ElectronicDevice> electronicDevices;
+    private List<Person> friends;
 
 
-	public String getNom() {
-		return nom;
-	}
+    public Person() {
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    }
+// constructeur
+    public Person(String nom, String prenom, List<Home> homes, List<ElectronicDevice> electronicDevices, List<Person> friends) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.homes = homes;
+        this.electronicDevices = electronicDevices;
+        this.friends = friends;
+    }
 
-	public String getPrenom() {
-		return prenom;
-	}
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getMail() {
-		return mail;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	@ManyToMany
-	public List<Person> getFriend() {
-		return friend;
-	}
+    public String getPrenom() {
+        return prenom;
+    }
 
-	public void setFriend(List<Person> friend) {
-		this.friend = friend;
-	}
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	public Home getHome() {
-		return home;
-	}
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    public List<Home> getHomes() {
+        return homes;
+    }
 
-	public void setHome(Home home) {
-		this.home = home;
-	}
+    public void setHomes(List<Home> homes) {
+        this.homes = homes;
+    }
 
-	@Id
-	@GeneratedValue
-	public long getId() {
-		return id;
-	}
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    public List<ElectronicDevice> getElectronicDevices() {
+        return electronicDevices;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setElectronicDevices(List<ElectronicDevice> electronicDevices) {
+        this.electronicDevices = electronicDevices;
+    }
 
+    @ManyToMany
+    @JoinTable(
+            name = "PERSON_FRIENDS",
+            joinColumns = @JoinColumn(name = "ID_PERSON", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ID_FRIEND", referencedColumnName = "ID")
+    )
+    public List<Person> getFriends() {
+        return friends;
+    }
 
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", friend=" + friend
-				+ ", home=" + home + " ]";
-	}
-
+    public void setFriends(List<Person> friends) {
+        this.friends = friends;
+    }
 }
